@@ -362,6 +362,9 @@ var Creatable = _react2['default'].createClass({
 		// ({ label: string, labelKey: string, valueKey: string }): Object
 		newOptionCreator: _react2['default'].PropTypes.func,
 
+		// input change handler: function (input) {}
+		onInputChange: _react2['default'].PropTypes.func,
+
 		// input keyDown handler: function (event) {}
 		onInputKeyDown: _react2['default'].PropTypes.func,
 
@@ -488,6 +491,11 @@ var Creatable = _react2['default'].createClass({
 	},
 
 	onInputChange: function onInputChange(input) {
+		var onInputChange = this.props.onInputChange;
+
+		if (typeof onInputChange === 'function') {
+			onInputChange(input);
+		}
 		// This value may be needed in between Select mounts (when this.select is null)
 		this.inputValue = input;
 	},
