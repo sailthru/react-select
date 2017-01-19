@@ -1569,7 +1569,7 @@ var Select = _react2['default'].createClass({
 		} else if (this.props.multi && this.state.inputValue) {
 			var options = this.getValueArray(this.state.inputValue);
 			if (options.length > 0) {
-				this.selectValue(options);
+				return this.selectValue(options);
 			}
 		}
 	},

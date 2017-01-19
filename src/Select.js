@@ -765,7 +765,7 @@ const Select = React.createClass({
 		} else if (this.props.multi && this.state.inputValue) {
 			const options = this.getValueArray(this.state.inputValue);
 			if (options.length > 0) {
-				this.selectValue(options);
+				return this.selectValue(options);
 			}
 		}
 	},
