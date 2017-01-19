@@ -1690,7 +1690,8 @@ describe('Select', () => {
 				{ value: 'one', label: 'One' },
 				{ value: 'two', label: 'Two', clearableValue: false },
 				{ value: 'three', label: 'Three' },
-				{ value: 'four', label: 'Four' }
+				{ value: 'four', label: 'Four' },
+				{ value: 'nyc', label: 'New York City' },
 			];
 
 			// Render an instance of the component
@@ -1703,10 +1704,36 @@ describe('Select', () => {
 		});
 
 		it('selects a single option on enter', () => {
-
 			typeSearchText('fo');
 			pressEnterToAccept();
 			expect(onChange, 'was called with', [{ label: 'Four', value: 'four' }]);
+		});
+
+		it('selects nothing when pressing enter, if all options are filtered out by search', () => {
+			typeSearchText('fox');
+			pressEnterToAccept();
+			expect(onChange, 'was not called');
+		});
+
+		describe('processing delimited value', () => {
+			it('should select multiple values at once based on delimiter', () => {
+				typeSearchText('four,three');
+				pressEnterToAccept();
+				expect(onChange, 'was called with',
+					[{ label: 'Four', value: 'four' }, { label: 'Three', value: 'three' }]);
+			});
+			it('should ignore values that match the Label (instead of id)', () => {
+				typeSearchText('four,New York City,three');
+				pressEnterToAccept();
+				expect(onChange, 'was called with',
+					[{ label: 'Four', value: 'four' }, { label: 'Three', value: 'three' }]);
+			});
+			it('should ignore values that are not in the options list', () => {
+				typeSearchText('one,abc,three,xyz,nyc');
+				pressEnterToAccept();
+				expect(onChange, 'was called with',
+					[{ label: 'One', value: 'one' }, { label: 'Three', value: 'three' }, { label: 'New York City', value: 'nyc' }]);
+			});
 		});
 
 		describe('when using the option value object', () => {
@@ -1767,7 +1794,8 @@ describe('Select', () => {
 
 			expect(options[0], 'to have text', 'One');
 			expect(options[1], 'to have text', 'Two');
-			expect(options, 'to have length', 2);  // No "Four", as already selected
+			expect(options[2], 'to have text', 'New York City');
+			expect(options, 'to have length', 3);  // No "Four", as already selected
 		});
 
 		it('removes the last selected option with backspace', () => {

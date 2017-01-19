@@ -1566,6 +1566,11 @@ var Select = _react2['default'].createClass({
 	selectFocusedOption: function selectFocusedOption() {
 		if (this._focusedOption) {
 			return this.selectValue(this._focusedOption);
+		} else if (this.props.multi && this.state.inputValue) {
+			var options = this.getValueArray(this.state.inputValue);
+			if (options.length > 0) {
+				return this.selectValue(options);
+			}
 		}
 	},
 
@@ -1855,7 +1860,7 @@ var Select = _react2['default'].createClass({
 		var _this8 = this;
 
 		var valueArray = this.getValueArray(this.props.value);
-		var options = this._visibleOptions = this.filterOptions(this.props.multi ? this.getValueArray(this.props.value) : null);
+		var options = this._visibleOptions = this.filterOptions(this.props.multi ? valueArray : null);
 		var isOpen = this.state.isOpen;
 		if (this.props.multi && !options.length && valueArray.length && !this.state.inputValue) isOpen = false;
 		var focusedOptionIndex = this.getFocusableOptionIndex(valueArray[0]);
