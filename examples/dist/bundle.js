@@ -2061,11 +2061,12 @@ var Select = _react2['default'].createClass({
 		if (!options.length) return null;
 
 		var focusedOption = this.state.focusedOption || selectedOption;
+		var isCreatableOption = this.props.allowCreate;
+
 		if (focusedOption && !focusedOption.disabled) {
 			// "Creatable" option objects are not equal to each other, so we must check for equality of properties
 			// this is pretty hacky but this whole library is horribly written and hard to work with
 			var focusedOptionIndex = undefined;
-			var isCreatableOption = focusedOption[this.props.valueKey].slice(0, 7) === 'Create ';
 			var equalVals = focusedOption[this.props.valueKey] === options[0][this.props.valueKey];
 			var equalLabels = focusedOption[this.props.labelKey] === options[0][this.props.labelKey];
 
@@ -2083,10 +2084,10 @@ var Select = _react2['default'].createClass({
 		for (var i = 0; i < options.length; i++) {
 			var idx = i;
 			// if no option is selected, we don't want to select the create option by default if there are others available
-			if (options[i + 1] && options[i][this.props.valueKey].slice(0, 7) === 'Create ') {
+			if (options[i + 1] && idx === 0 && isCreatableOption) {
 				idx += 1;
 			}
-			return idx;
+			if (!options[idx].disabled) return idx;
 		}
 		return null;
 	},
