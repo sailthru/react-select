@@ -1028,7 +1028,7 @@ const Select = React.createClass({
 		for (var i = 0; i < options.length; i++) {
 			let idx = i;
 			// if no option is selected, we don't want to select the create option by default if there are others available
-			if (options[i + 1] && idx === 0 && isCreatableOption) {
+			if (options[i + 1] && idx === 0 && isCreatableOption && options[idx][this.props.valueKey].slice(0, 7) === 'Create ') {
 				idx += 1;
 			}
 			if (!options[idx].disabled) return idx;
