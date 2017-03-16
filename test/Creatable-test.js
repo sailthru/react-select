@@ -153,7 +153,8 @@ describe('Creatable', () => {
 			shouldKeyDownEventCreateNewOption: ({ keyCode }) => keyCode === 13
 		});
 		typeSearchText('on'); // ['Create option "on"', 'One']
-		TestUtils.Simulate.keyDown(filterInputNode, { keyCode: 40, key: 'ArrowDown' }); // Select 'One'
+		// no longer need to do below because 'One' is selected automatically
+		// TestUtils.Simulate.keyDown(filterInputNode, { keyCode: 40, key: 'ArrowDown' }); // Select 'One'
 		TestUtils.Simulate.keyDown(filterInputNode, { keyCode: 13 });
 		expect(options, 'to have length', 1);
 	});
